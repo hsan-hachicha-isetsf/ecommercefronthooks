@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { fetcharticlesPagination } from '../../../services/articleservice'
+import Affichearticle from './Affichearticle'
 
 const Listarticles = () => {
   const[articles,setArticles]=useState([])
@@ -27,7 +28,7 @@ useEffect(()=>{
 
 
     <div>
-      Liste des articles
+      <Affichearticle articles={articles}/>
     </div>
   )
 }
