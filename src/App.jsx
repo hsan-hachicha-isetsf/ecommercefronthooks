@@ -18,8 +18,9 @@ function App() {
       <Router>
         <Menu/>
         <Routes>
+        <Route path="/" element={<Listarticlescard/>}/>
           <Route path="/articles/list" element={<Listarticles/>}/>
-          <Route path="/articles/insert" element={<Insertarticle/>}/>
+          <Route path="/articles/add" element={<Insertarticle/>}/>
           <Route path="/articles/edit/:id" element={<Editarticle/>}/>
           <Route path="/categories/list" element={<Listscategories/>}/>
           <Route path="/categories/insert" element={<Insertcategorie/>}/>

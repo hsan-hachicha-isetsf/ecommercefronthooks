@@ -4,7 +4,7 @@ import {Link } from 'react-router-dom'
 
 const Menu = () => {
   return (
-    <Navbar bg="primary" variant="dark">
+    <Navbar bg="primary" variant="dark" >
     <Container>
     <Navbar.Brand >Gestion Commerciale</Navbar.Brand>
     <Nav className="me-auto">
