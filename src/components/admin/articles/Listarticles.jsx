@@ -16,6 +16,7 @@ const Listarticles = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [searchText, setSearchText] = useState('');
 const[show,setShow]=useState(false)
+
   const fetchProducts=async(page,limit,searchText)=>{
     try {
       const res=await fetcharticlesPagination(page,limit,searchText)
@@ -110,6 +111,7 @@ const handleclose=()=>{
       handleLimitChange={handleLimitChange}
       limit={limit}
       handleDeletearticle={handleDeletearticle}
+   
       />
       <Pagination handlePrevPage={handlePrevPage}
       handleNextPage={handleNextPage}
@@ -117,6 +119,8 @@ const handleclose=()=>{
       totalPages={totalPages}
       currentPage ={currentPage }
       />
+
+
 
     </div>
   )

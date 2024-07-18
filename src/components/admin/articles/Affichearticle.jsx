@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./article.css"
+import Editarticle  from './Editarticle'
 const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle}) => {
+  const[showe,setShowe]=useState(false)
+const[art,setArt]=useState({})
+  
+  const handleEdit=(art)=>{
+    setShowe(true)
+    setArt(art)
+
+  }
   return (
     <div className="table-container">
       
@@ -28,7 +37,7 @@ const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle}) 
                 <td>{art.marque}</td>
                 <td>{art.qtestock}</td>
                 <td>{art.prix}</td>
-                <td><button className='edit'>
+                <td><button className='edit' onClick={()=>handleEdit(art)}>
                 <i className="fa-solid fa-pen-to-square"></i>Update</button></td>
     
                 <td><button className="delete" onClick={()=>handleDeletearticle(art._id,art.designation)}>
@@ -66,7 +75,14 @@ const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle}) 
   
             </tfoot>
     </table>
-    
+    {showe &&  <Editarticle
+    showe={showe}
+    art={art}
+     
+     />
+}
+
+
     </div>    
 
   )
