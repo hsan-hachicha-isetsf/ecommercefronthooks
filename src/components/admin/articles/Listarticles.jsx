@@ -81,6 +81,12 @@ const handleshow=()=>{
 const handleclose=()=>{
   setShow(false)
 }
+const modifarticle=(artmod)=>{
+  
+    setArticles(articles.map((art) =>art._id === artmod._id ? artmod : art));
+     
+    
+}
 
   return (
 
@@ -111,6 +117,8 @@ const handleclose=()=>{
       handleLimitChange={handleLimitChange}
       limit={limit}
       handleDeletearticle={handleDeletearticle}
+      modifarticle={modifarticle}
+      
    
       />
       <Pagination handlePrevPage={handlePrevPage}

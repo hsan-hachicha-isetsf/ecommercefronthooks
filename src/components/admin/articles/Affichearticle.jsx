@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import "./article.css"
 import Editarticle  from './Editarticle'
-const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle}) => {
+const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle,modifarticle}) => {
   const[showe,setShowe]=useState(false)
 const[art,setArt]=useState({})
   
@@ -82,6 +82,7 @@ const handleEdit=(art)=>{
     showe={showe}
     art={art}
     handleclose={handleclose}
+    modifarticle={modifarticle}
      />
 }
 

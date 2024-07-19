@@ -9,8 +9,9 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+import { editarticle } from '../../../services/articleservice'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-const Editarticle = ({showe,art,handleclose}) => {
+const Editarticle = ({showe,art,handleclose,modifarticle}) => {
   
   const[article,setArticle]=useState(art)
   const[scategories,setScategories]=useState([])
@@ -31,13 +32,68 @@ const Editarticle = ({showe,art,handleclose}) => {
   useEffect(() => {
     
     loadscategories()  
+    setFiles( [
+      {
+        source: art.imageart,
+        options: { type: 'local' }
+      }
+      ])
+
   }, [])
 
 
 const handlemodif=(e)=>{
   setArticle({...article,[e.target.id]:e.target.value})
 }
+const serverOptions = () => { 
+  return {
+    load: (source, load, error, progress, abort, headers) => {
+      var myRequest = new Request(source);
+      fetch(myRequest).then(function(response) {
+        response.blob().then(function(myBlob) {
+          load(myBlob);
+        });
+      });
+    },
+    process: (fieldName, file, metadata, load, error, progress, abort) => {
+        console.log(file)
+      const data = new FormData();
+      
+      data.append('file', file);
+      data.append('upload_preset', 'Ecommerce_cloudinary');
+      data.append('cloud_name', 'iset-sfax');
+      data.append('public_id', file.name);
 
+      axios.post('https://api.cloudinary.com/v1_1/iset-sfax/image/upload', data)
+        .then((response) => response.data)
+        .then((data) => {
+          console.log(data);
+         setArticle({...article,imageart:data.url}) ;
+          load(data);
+        })
+        .catch((error) => {
+          console.error('Error uploading file:', error);
+          error('Upload failed');
+          abort();
+        });
+    },
+  };
+};
+
+const handleSubmit=async(e)=>{
+  try {
+    e.preventDefault()
+    await editarticle(article).then(res=>{
+      modifarticle(article)
+    })
+    handleclose()
+  } catch (error) {
+    console.log(error)
+  }
+  
+
+    
+}
   return (
     <div className="form-container">
    
@@ -129,8 +185,8 @@ const handlemodif=(e)=>{
                    files={files}
                    acceptedFileTypes="image/*"
                    onupdatefiles={setFiles}
-                   allowMultiple={true}
-                 
+                   allowMultiple={false}
+                   server={serverOptions()}
                    name="file"
                       
           />
