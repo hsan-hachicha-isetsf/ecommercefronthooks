@@ -10,7 +10,8 @@ import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orien
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
-const Editarticle = ({showe,art}) => {
+const Editarticle = ({showe,art,handleclose}) => {
+  
   const[article,setArticle]=useState(art)
   const[scategories,setScategories]=useState([])
   const [files, setFiles] = useState([]);
@@ -31,12 +32,19 @@ const Editarticle = ({showe,art}) => {
     
     loadscategories()  
   }, [])
+
+
+const handlemodif=(e)=>{
+  setArticle({...article,[e.target.id]:e.target.value})
+}
+
   return (
     <div className="form-container">
-    <Modal show={showe} >
+   
+    <Modal show={showe} onHide={handleclose} >
     <form  className="article-form">
     <Modal.Header closeButton>
-<h2>Ajouter Article</h2>
+<h2>Modifier Article</h2>
 </Modal.Header>
 <Modal.Body>
 
@@ -48,7 +56,7 @@ const Editarticle = ({showe,art}) => {
             type="text"
             id="reference"
             value={article.reference}
-            onChange={(e) => setArticle({...article,reference:e.target.value})}
+            onChange={(e) => handlemodif(e)}
             className="form-input"
             placeholder="Entrez référence article"
           />
@@ -60,7 +68,7 @@ const Editarticle = ({showe,art}) => {
           type="text"
             id="designation"
             value={article.designation}
-            onChange={(e) => setArticle({...article,designation:e.target.value})}
+            onChange={(e) => handlemodif(e)}
             className="form-input"
             placeholder="Entrez la désignation article"
           />
@@ -71,7 +79,7 @@ const Editarticle = ({showe,art}) => {
             type="text"
             id="marque"
             value={article.marque}
-            onChange={(e) => setArticle({...article,marque:e.target.value})}
+            onChange={(e) => handlemodif(e)}
             className="form-input"
             placeholder="Entrez marque"
           />
@@ -82,7 +90,7 @@ const Editarticle = ({showe,art}) => {
             type="number"
             id="qtestock"
             value={article.qtestock}
-            onChange={(e) => setArticle({...article,qtestock:e.target.value})}
+            onChange={(e) => handlemodif(e)}
             className="form-input"
             placeholder="Entrez quantité stock"
           />
@@ -94,7 +102,7 @@ const Editarticle = ({showe,art}) => {
             required
             id="prix"
             value={article.prix}
-            onChange={(e) => setArticle({...article,prix:e.target.value})}
+            onChange={(e) => handlemodif(e)}
             className="form-input"
             placeholder="Entrez Quantité stock"
           />
@@ -106,7 +114,7 @@ const Editarticle = ({showe,art}) => {
               id="category"
               className="form-control"
               value={article.scategorieID}
-              onChange={(e) => setArticle({...article,scategorieID:e.target.value})}
+              onChange={(e) => handlemodif(e)}
             >
               {scategories.map((scat,index)=>
               <option key={index} value={scat._id}>{scat.nomscategorie}  </option>

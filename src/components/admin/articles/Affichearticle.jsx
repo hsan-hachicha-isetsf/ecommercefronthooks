@@ -5,8 +5,11 @@ const Affichearticle = ({articles,handleLimitChange,limit,handleDeletearticle}) 
   const[showe,setShowe]=useState(false)
 const[art,setArt]=useState({})
   
-  const handleEdit=(art)=>{
-    setShowe(true)
+const handleShow=()=>{ setShowe(true)}
+const handleclose=()=>{setShowe(false)}
+  
+const handleEdit=(art)=>{
+    handleShow() 
     setArt(art)
 
   }
@@ -78,7 +81,7 @@ const[art,setArt]=useState({})
     {showe &&  <Editarticle
     showe={showe}
     art={art}
-     
+    handleclose={handleclose}
      />
 }
 
